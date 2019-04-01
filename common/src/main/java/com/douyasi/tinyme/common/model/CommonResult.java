@@ -36,7 +36,6 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      * @param message
      */
     public CommonResult(boolean success, String message) {
-        this.setSuccess(success);
         this.setMessage(message);
         this.setTimestamp(long2TimeStr());
     }

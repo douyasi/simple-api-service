@@ -7,12 +7,7 @@ import java.io.Serializable;
  * 
  * @author raoyc
  */
-public abstract class BaseResult<T> implements Serializable{
-
-    /**
-     * success ?
-     */
-    private boolean success = false;
+public abstract class BaseResult<T> implements Serializable {
 
     /**
      * message to response
@@ -34,23 +29,6 @@ public abstract class BaseResult<T> implements Serializable{
      */
     private String timestamp;
 
-    /**
-     * isSuccess
-     * 
-     * @return
-     */
-    public boolean isSuccess() {
-        return success;
-    }
-
-    /**
-     * setSuccess
-     * 
-     * @param success
-     */
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
 
     /**
      * getMessage
