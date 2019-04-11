@@ -9,6 +9,8 @@ import java.io.Serializable;
  */
 public abstract class BaseResult<T> implements Serializable {
 
+    private static final long serialVersionUID = -2335839219066407260L;
+
     /**
      * message to response
      */
@@ -25,7 +27,7 @@ public abstract class BaseResult<T> implements Serializable {
     private String code;
 
     /**
-     * current timestamp
+     * Current time stamp
      */
     private String timestamp;
 
