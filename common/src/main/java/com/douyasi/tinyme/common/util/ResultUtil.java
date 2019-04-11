@@ -2,6 +2,7 @@ package com.douyasi.tinyme.common.util;
 
 import com.douyasi.tinyme.common.constants.BaseErrorCode;
 import com.douyasi.tinyme.common.model.CommonResult;
+import com.douyasi.tinyme.common.model.EmptyData;
 
 /**
  * ResultUtil
@@ -17,9 +18,13 @@ public class ResultUtil {
      * @return
      */
     public static <T> CommonResult<T> returnSuccess(T data) {
-        CommonResult result = new CommonResult(BaseErrorCode.Common.SUCCESS.getCode(), BaseErrorCode.Common.SUCCESS.getMessage());
-        result.setSuccess(true);
-        result.setData(data);
+        CommonResult<T> result = new CommonResult<T>(BaseErrorCode.Common.SUCCESS.getCode(), BaseErrorCode.Common.SUCCESS.getMessage());
+        if (data == null) {
+            EmptyData emptyData = new EmptyData();
+            result.setData(emptyData);
+        } else {
+            result.setData(data);
+        }
         return result;
     }
 
@@ -30,14 +35,11 @@ public class ResultUtil {
      * @param code 
      * @return
      */
-    public static CommonResult returnError(String msg, String code) {
-        CommonResult result = new CommonResult();
+    public static <T> CommonResult<T> returnError(String msg, String code) {
         if (ValidateUtil.isEmpty(code)) {
             code = BaseErrorCode.Common.FAIL.getCode();
         }
-        result.setCode(code);
-        result.setData("");
-        result.setMessage(msg);
+        CommonResult<T> result = CommonResult.fail(code, msg);
         return result;
     }
 }

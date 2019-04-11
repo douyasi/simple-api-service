@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author raoyc
  */
 @XmlRootElement
-public class CommonResult<T> extends BaseResult implements Serializable {
+public class CommonResult<T> extends BaseResult<Object> implements Serializable {
 
     /**
      * serialVersionUID
@@ -30,27 +30,18 @@ public class CommonResult<T> extends BaseResult implements Serializable {
     }
 
     /**
-     * CommonResult #1
+     * CommonResult message
      * 
      * @param success
      * @param message
      */
-    public CommonResult(boolean success, String message) {
+    public CommonResult(String message) {
         this.setMessage(message);
         this.setTimestamp(long2TimeStr());
     }
 
     /**
-     * CommonResult #2
-     * 
-     * @param success
-     */
-    public CommonResult(boolean success) {
-        this.setSuccess(success);
-    }
-
-    /**
-     * CommonResult #3
+     * CommonResult code & message
      * 
      * @param code
      * @param message
@@ -62,29 +53,12 @@ public class CommonResult<T> extends BaseResult implements Serializable {
     }
 
     /**
-     * CommonResult #4
-     * 
-     * @param success
-     * @param message
-     * @param data
-     */
-    public CommonResult(boolean success, String message, String data) {
-        this.setSuccess(success);
-        this.setMessage(message);
-        this.setData(data);
-        this.setTimestamp(long2TimeStr());
-    }
-
-    /**
-     * Usage:
-     * Result.ok().setResult("hello")
-     * 
-     * Return with data
+     * setResult
      * 
      * @param data
      * @return CommonResult
      */
-    public CommonResult setResult(String data) {
+    public CommonResult<T> setResult(T data) {
         this.setData(data);
         this.setTimestamp(long2TimeStr());
         return this;
@@ -95,7 +69,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      *
      * @return CommonResult
      */
-    public static CommonResult ok() {
+    public static <T> CommonResult<T> ok() {
         return ok(BaseErrorCode.Common.SUCCESS);
     }
 
@@ -103,11 +77,10 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      * User-defined Message response, using IMessage Enum
      * 
      * @param msg IMessage interface
-     * @param <T> Object
      * @return CommonResult
      */
     public static <T> CommonResult<T> ok(IMessage msg) {
-        return baseCreate(msg.getCode(), msg.getMessage(), true);
+        return baseCreate(msg.getCode(), msg.getMessage());
     }
 
     /**
@@ -115,7 +88,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      *
      * @return CommonResult
      */
-    public static CommonResult fail() {
+    public static <T> CommonResult<T> fail() {
         return fail(BaseErrorCode.Common.UNKNOWN_ERROR);
     }
 
@@ -125,7 +98,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      * @param message IMessage
      * @return CommonResult
      */
-    public static CommonResult fail(IMessage message) {
+    public static <T> CommonResult<T> fail(IMessage message) {
         return fail(message.getCode(), message.getMessage());
     }
 
@@ -136,8 +109,8 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      * @param msg
      * @return CommonResult
      */
-    public static CommonResult fail(String code, String msg) {
-        return baseCreate(code, msg, false);
+    public static <T> CommonResult<T> fail(String code, String msg) {
+        return baseCreate(code, msg);
     }
 
     /**
@@ -145,15 +118,13 @@ public class CommonResult<T> extends BaseResult implements Serializable {
      * 
      * @param code
      * @param msg
-     * @param success
-     * @param <T>
-     * @return
+     * @return CommonResult
      */
-    private static <T> CommonResult<T> baseCreate(String code, String msg, boolean success) {
-        CommonResult result = new CommonResult();
+    private static <T> CommonResult<T> baseCreate(String code, String msg) {
+        CommonResult<T> result = new CommonResult<T>();
         result.setCode(code);
-        result.setSuccess(success);
         result.setMessage(msg);
+        result.setData(new EmptyData());
         result.setTimestamp(long2TimeStr());
         return result;
     }
@@ -168,6 +139,4 @@ public class CommonResult<T> extends BaseResult implements Serializable {
         String dateTime = df.format(new Date());
         return dateTime;
     }
-    
-    
 }

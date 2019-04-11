@@ -22,4 +22,7 @@ public enum ResultCode {
         this.code = code;
     }
     
+    public int getCode() {
+        return code;
+    }
 }

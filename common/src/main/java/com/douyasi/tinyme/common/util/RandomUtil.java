@@ -18,7 +18,7 @@ public class RandomUtil {
     private static final String BASE_NUMBER = "0123456789";
     
     /** random selected characters */
-    private static final String BASE_CHAR = "abcdefghijklmnopqrstuvwxyz";
+    private static final String BASE_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     
     /** random selected characters and numbers */
     private static final String BASE_CHAR_NUMBER = BASE_CHAR + BASE_NUMBER;
