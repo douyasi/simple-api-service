@@ -70,7 +70,7 @@
     </insert>
     <update id="update" parameterType="com.douyasi.example.jersey_jetty_demo.domain.Page">
         UPDATE `tm_pages`
-            SET `content`=#{content}, `updated_at`=DATE_FORMAT(NOW(),'%Y-%m-%d %H:%m:%s')
+            SET `content`=#{content}, `updated_at`=DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
         WHERE
             `id`=#{id};
     </update>
