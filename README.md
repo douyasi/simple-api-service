@@ -1,2 +1,21 @@
-# simple-api-service
-Simple restful API service Demo
+simple-api-service
+-----
+
+>   最小化的 `RESTFUL API` 服务示例源码，无缓存与队列等大型组件支持。 
+
+
+### 文档
+
+- [Java代码风格](_docs/CodeStyle.md)
+- [Flyway教程](_docs/Flyway.md)
+- [接口文档](_docs/api.md)
+
+### 项目说明
+
+#### `common` 类库说明
+
+`common` 项目主要提供了基础工具类、异常、接口与模型等定义，供调用方使用。
+
+#### `jersey-jetty-api-service-demo` 项目说明
+
+此项目主要结合 `JAX-RS` 、`Jersey` 与 `Jetty` 来完成的轻量级 `restfull api` 服务。`Jersey` 可视为支持 `JAX-RS` 轻型 `REST` 框架，`Jetty` 可视为比 `Tomcat` 更轻便，可嵌入的服务器。

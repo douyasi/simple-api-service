@@ -131,7 +131,7 @@ public class RestApi {
             sqlSession.close();
         }
         if (row == 1) {
-            return ResultUtil.returnSuccess(null);
+            return ResultUtil.returnSuccess();
         } else {
             return ResultUtil.returnError("insert fail!", null);
         }
@@ -201,7 +201,7 @@ public class RestApi {
                 sqlSession.close();
             }
             if (row == 1) {
-                return ResultUtil.returnSuccess(null);
+                return ResultUtil.returnSuccess();
             } else {
                 return ResultUtil.returnError("update fail!", null);
             }
@@ -240,7 +240,7 @@ public class RestApi {
             }
         }
         if (row == 1) {
-            return ResultUtil.returnSuccess(null);
+            return ResultUtil.returnSuccess();
         } else {
             return ResultUtil.returnError("delete fail!", null);
         }
