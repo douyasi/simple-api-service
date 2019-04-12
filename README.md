@@ -1,7 +1,7 @@
 simple-api-service
 -----
 
->   最小化的 `RESTFUL API` 服务示例源码，无缓存与队列等大型组件支持。 
+>   最小化的 `RESTFUL API` 服务示例源码，无缓存、队列等组件支持，仅 `MySQL` 数据库支持。 
 
 
 ### 文档
