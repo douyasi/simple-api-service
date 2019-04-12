@@ -1,6 +1,7 @@
 package com.douyasi.tinyme.common.util;
 
 import com.douyasi.tinyme.common.constants.BaseErrorCode;
+import com.douyasi.tinyme.common.interfaces.IMessage;
 import com.douyasi.tinyme.common.model.CommonResult;
 import com.douyasi.tinyme.common.model.EmptyData;
 
@@ -12,27 +13,35 @@ import com.douyasi.tinyme.common.model.EmptyData;
 public class ResultUtil {
     
     /**
-     * return success
+     * return success with data
      *
      * @param data
      * @return
      */
     public static <T> CommonResult<T> returnSuccess(T data) {
         CommonResult<T> result = new CommonResult<T>(BaseErrorCode.Common.SUCCESS.getCode(), BaseErrorCode.Common.SUCCESS.getMessage());
-        if (data == null) {
-            EmptyData emptyData = new EmptyData();
-            result.setData(emptyData);
-        } else {
-            result.setData(data);
-        }
+        result.setData(data);
+        return result;
+    }
+    
+    /**
+     * return success without data
+     *
+     * @param data
+     * @return
+     */
+    public static <T> CommonResult<T> returnSuccess() {
+        CommonResult<T> result = new CommonResult<T>(BaseErrorCode.Common.SUCCESS.getCode(), BaseErrorCode.Common.SUCCESS.getMessage());
+        EmptyData emptyData = new EmptyData();
+        result.setData(emptyData);
         return result;
     }
 
     /**
-     * return error
+     * return error with code & message
      *
      * @param msg error message
-     * @param code 
+     * @param code error code
      * @return
      */
     public static <T> CommonResult<T> returnError(String msg, String code) {
@@ -40,6 +49,17 @@ public class ResultUtil {
             code = BaseErrorCode.Common.FAIL.getCode();
         }
         CommonResult<T> result = CommonResult.fail(code, msg);
+        return result;
+    }
+    
+    /**
+     * return error using IMessage
+     * 
+     * @param message
+     * @return
+     */
+    public static <T> CommonResult<T> returnError(IMessage message) {
+        CommonResult<T> result = CommonResult.fail(message);
         return result;
     }
 }

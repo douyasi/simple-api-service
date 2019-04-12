@@ -12,6 +12,11 @@ public abstract class BaseResult<T> implements Serializable {
     private static final long serialVersionUID = -2335839219066407260L;
 
     /**
+     * error code
+     */
+    private String code;
+
+    /**
      * message to response
      */
     private String message;
@@ -22,15 +27,27 @@ public abstract class BaseResult<T> implements Serializable {
     private T data;
 
     /**
-     * error code
-     */
-    private String code;
-
-    /**
      * Current time stamp
      */
     private String timestamp;
 
+    /**
+     * getCode
+     * 
+     * @return
+     */
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     * setCode
+     * 
+     * @param code
+     */
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     /**
      * getMessage
@@ -66,24 +83,6 @@ public abstract class BaseResult<T> implements Serializable {
      */
     public void setData(T data) {
         this.data = data;
-    }
-
-    /**
-     * getCode
-     * 
-     * @return
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
-     * setCode
-     * 
-     * @param code
-     */
-    public void setCode(String code) {
-        this.code = code;
     }
 
     /**
