@@ -12,6 +12,17 @@ simple-api-service
 
 ### 项目说明
 
+#### 数据迁移
+
+参考上面 `Flyway` 教程，这里使用它二进制来迁移数据库。
+
+```bash
+cd _migration/db/dev
+cp -r flyway.conf.example flyway.cnf
+flyway migrate -locations=filesystem:`pwd`
+flyway -user=root -password=root -url=jdbc:mysql://localhost:3306/tm_demo_dev -locations=filesystem:`pwd` migrate
+```
+
 #### `common` 类库说明
 
 `common` 项目主要提供了基础工具类、异常、接口与模型等定义，供调用方使用。
