@@ -1,13 +1,17 @@
 package com.douyasi.example.jersey_jetty_demo.domain;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class User {
+
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     private Long id;
 
     private String email, nickname, password;
 
-    private Timestamp createdAt, updatedAt;
+    private LocalDateTime createdAt, updatedAt;
 
     public Long getId() {
         return id;
@@ -33,19 +37,19 @@ public class User {
         this.nickname = nickname;
     }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
+    public String getCreatedAt() {
+        return createdAt.format(formatter);
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
+    public String getUpdatedAt() {
+        return updatedAt.format(formatter);
     }
 
-    public void setUpdatedAt(Timestamp updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
