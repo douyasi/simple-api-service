@@ -3,12 +3,12 @@ jersey-jetty-api-service-demo
 
 ### 编译运行
 
-参考 [Flyway](../_docs/Flyway.md) 及 [README](../README.md#数据迁移) 迁移数据之后，修改数据库配置参数。
+参考 [Flyway](../_docs/Flyway.md) 及 [README](../README.md#数据迁移) 迁移数据，然后编译运行：
 
 ```bash
-# 修改数据库配置
+# 根据实际修改数据库配置
 vim jersey-jetty-api-service-demo/src/main/mybatis-config.xml
-# 打包安装
+# 打包
 mvn clean install
 # 执行 jar
 java -jar target/jersey-jetty-api-service-demo.jar
