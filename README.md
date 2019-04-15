@@ -30,3 +30,8 @@ flyway -user=root -password=root -url=jdbc:mysql://localhost:3306/tm_demo_dev -l
 #### `jersey-jetty-api-service-demo` 项目说明
 
 此项目主要结合 `JAX-RS` 、`Jersey` 与 `Jetty` 来完成的轻量级 `restfull api` 服务。`Jersey` 可视为支持 `JAX-RS` 轻型 `REST` 框架，`Jetty` 可视为比 `Tomcat` 更轻便，可嵌入的服务器。
+
+
+### 参考资料
+
+- https://github.com/DocsHome/microservices
