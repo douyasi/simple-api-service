@@ -86,6 +86,7 @@ curl http://127.0.0.1:18080/api/pages?page=2&per_page=2 -H "Content-Type: applic
     "data": {
         "total": 2,
         "per_page": 2,
+        "current_page": 1,
         "items": [
             {
                 "id": "1",
