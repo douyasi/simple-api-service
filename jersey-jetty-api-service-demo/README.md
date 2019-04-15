@@ -3,16 +3,18 @@ jersey-jetty-api-service-demo
 
 ### 编译运行
 
+参考 [Flyway](../_docs/Flyway.md) 及 [README](../README.md#数据迁移) 迁移数据之后，修改数据库配置参数。
+
 ```bash
 # 修改数据库配置
-cd jersey-jetty-api-service-demo/src/main/mybatis-config.xml
+vim jersey-jetty-api-service-demo/src/main/mybatis-config.xml
 # 打包安装
 mvn clean install
 # 执行 jar
 java -jar target/jersey-jetty-api-service-demo.jar
 ```
 
-参考 [_docs/api](../_docs/api.md) 文档，请求 `REST` 接口。
+参考 [api](../_docs/api.md) 文档，请求 `REST` 接口。
 
 ### 参考资料
 
@@ -29,3 +31,4 @@ java -jar target/jersey-jetty-api-service-demo.jar
 - https://stackoverflow.com/questions/26777083/best-practice-for-rest-token-based-authentication-with-jax-rs-and-jersey
 - https://github.com/shalousun/ApplicationPower
 - https://waylau.gitbooks.io/rest-in-action/
+- https://waylau.gitbooks.io/jersey-2-user-guide/content/

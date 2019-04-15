@@ -35,3 +35,8 @@ flyway -user=root -password=root -url=jdbc:mysql://localhost:3306/tm_demo_dev -l
 ### 参考资料
 
 - https://github.com/DocsHome/microservices
+- https://jersey.github.io/
+- https://www.eclipse.org/jetty/
+- https://spring.io/
+- https://waylau.com/netty-4-user-guide/
+- https://howtodoinjava.com/jersey-jax-rs-tutorials/
