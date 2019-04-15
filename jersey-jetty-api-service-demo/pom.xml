@@ -30,7 +30,7 @@
 			<groupId>org.glassfish.jersey.inject</groupId>
 			<artifactId>jersey-hk2</artifactId>
 			<version>${jerseyVersion}</version>
-        </dependency>
+		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-jetty-http</artifactId>
@@ -104,9 +104,13 @@
 		<dependency>
 			<groupId>com.douyasi.tinyme</groupId>
 			<artifactId>common</artifactId>
-			<scope>system</scope>
 			<version>1.0-SNAPSHOT</version>
+			<!--
+			<scope>system</scope>
 			<systemPath>${project.basedir}/../libs/tinyme-common.jar</systemPath>
+			<type>jar</type>
+			<optional>true</optional>
+			-->
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -116,7 +120,36 @@
 	</dependencies>
 	<build>
 		<finalName>jersey-jetty-api-service-demo</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources/</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.5.2</version>
+				<executions>
+					<execution>
+						<id>install-external</id>
+						<phase>clean</phase>
+						<configuration>
+							<file>${project.basedir}/../libs/tinyme-common.jar</file>
+							<repositoryLayout>default</repositoryLayout>
+							<groupId>com.douyasi.tinyme</groupId>
+							<artifactId>common</artifactId>
+							<version>1.0-SNAPSHOT</version>
+							<packaging>jar</packaging>
+							<generatePom>true</generatePom>
+						</configuration>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
@@ -161,8 +194,10 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+			<!--
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -171,6 +206,7 @@
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
+			-->
 		</plugins>
 	</build>
 </project>
