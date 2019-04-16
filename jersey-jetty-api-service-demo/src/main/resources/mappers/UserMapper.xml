@@ -11,10 +11,10 @@
         <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
         <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
     </resultMap>
-    <select id="getUser" resultType="User" parameterType="java.lang.Long">
+    <select id="getUser" resultType="com.douyasi.example.jersey_jetty_demo.domain.User" parameterType="java.lang.Long">
         select * from tm_users where id=#{id}
     </select>
-    <select id="getUserByCredentials" resultType="User">
+    <select id="getUserByCredentials" resultType="com.douyasi.example.jersey_jetty_demo.domain.User">
         select * from tm_users where email=#{email} and password=#{password}
     </select>
 </mapper>
