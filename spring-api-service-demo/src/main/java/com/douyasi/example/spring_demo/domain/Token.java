@@ -1,5 +1,6 @@
 package com.douyasi.example.spring_demo.domain;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -19,8 +20,10 @@ import lombok.experimental.Accessors;
 @Setter
 @ToString
 @SuppressWarnings("unused")
-public class Token {
-    
+public class Token implements Serializable {
+
+    private static final long serialVersionUID = 1786836742703432189L;
+
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private Long /*id,*/ uid, expiredAt;

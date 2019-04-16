@@ -2,16 +2,7 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.douyasi.example.jersey_jetty_demo.domain.dao.PageDao">
-    <!--
-    <resultMap id="BaseResultMap" type="com.douyasi.example.jersey_jetty_demo.domain.Page">
-        <id column="id" jdbcType="INTEGER" property="id" />
-        <result column="uid" jdbcType="INTEGER" property="uid" />
-        <result column="content" jdbcType="VARCHAR" property="content" />
-        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
-        <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
-    </resultMap>
-     -->
+<mapper namespace="com.douyasi.example.spring_demo.domain.dao.PageDao">
     <sql id="allColumn">
         `id`,
         `uid`,
@@ -38,13 +29,13 @@
             </if>
         </trim>
     </sql>
-    <select id="getPage" resultType="Page">
+    <select id="getPage" resultType="com.douyasi.example.spring_demo.domain.Page">
         SELECT 
         <include refid="allColumn"></include>
         FROM `tm_pages`
         WHERE `id`=#{id} AND uid=#{uid};
     </select>
-    <select id="getPagesByCondition" resultType="com.douyasi.example.jersey_jetty_demo.domain.Page">
+    <select id="getPagesByCondition" resultType="com.douyasi.example.spring_demo.domain.Page">
         SELECT
         <include refid="allColumn"></include>
         FROM `tm_pages`
@@ -58,7 +49,7 @@
         FROM `tm_pages`
         <include refid="whereCondition"></include>;
     </select>
-    <insert id="insert" parameterType="com.douyasi.example.jersey_jetty_demo.domain.Page">
+    <insert id="insert" parameterType="com.douyasi.example.spring_demo.domain.Page">
         INSERT INTO `tm_pages` (<include refid="allColumn"></include>)
             VALUES (
                 #{id}, 
@@ -68,7 +59,7 @@
                 #{updatedAt}
             );
     </insert>
-    <update id="update" parameterType="com.douyasi.example.jersey_jetty_demo.domain.Page">
+    <update id="update" parameterType="com.douyasi.example.spring_demo.domain.Page">
         UPDATE `tm_pages`
             SET `content`=#{content}, `updated_at`=DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i:%s')
         WHERE

@@ -1,5 +1,6 @@
 package com.douyasi.example.spring_demo.domain;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,7 +22,9 @@ import lombok.experimental.Accessors;
 @Setter
 @ToString
 @SuppressWarnings("unused")
-public class User {
+public class User implements Serializable {
+
+    private static final long serialVersionUID = -3499834787613672470L;
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
