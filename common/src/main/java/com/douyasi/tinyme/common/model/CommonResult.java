@@ -7,14 +7,11 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * CommonResult
  *
  * @author raoyc
  */
-@XmlRootElement(name="root")
 public class CommonResult<T> extends BaseResult<Object> implements Serializable {
 
     /**
