@@ -3,6 +3,10 @@ package com.douyasi.example.spring_demo.domain;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +23,7 @@ import lombok.experimental.Accessors;
 @Setter
 @ToString
 @SuppressWarnings("unused")
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Page implements Serializable {
 
     private static final long serialVersionUID = 7217589483148921228L;

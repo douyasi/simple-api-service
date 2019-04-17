@@ -5,6 +5,9 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,11 +25,12 @@ import lombok.experimental.Accessors;
 @Setter
 @ToString
 @SuppressWarnings("unused")
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class User implements Serializable {
 
     private static final long serialVersionUID = -3499834787613672470L;
 
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private Long id;
 
