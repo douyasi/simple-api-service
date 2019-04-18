@@ -2,15 +2,14 @@ package com.douyasi.example.spring_demo.security.filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -27,16 +26,12 @@ import javax.servlet.http.HttpServletResponse;
  * - https://github.com/RobJinman/CorsFilter
  * - https://github.com/taoxy1993/Spring4-SpringMVC4-Mybatis4-Quartz
  */
-public class CORSFilter implements Filter {
+public class CORSFilter extends GenericFilterBean {
 
     private static final Logger logger = LoggerFactory.getLogger(CORSFilter.class);
     
     private static Set<String> allowedOrigins = new HashSet<String>(Arrays.asList(
         "http://localhost:18080", "http://127.0.0.1:18080"));
-
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {}
 
     @Override
     public void doFilter(ServletRequest request,
@@ -46,7 +41,7 @@ public class CORSFilter implements Filter {
         String ori = req.getHeader("Origin");
         logger.info("origin domain: " + ori);
         if (ori != null && allowedOrigins.contains(ori)) {
-            HttpServletResponse res = (HttpServletResponse)response;
+            HttpServletResponse res = (HttpServletResponse) response;
             res.setHeader("Access-Control-Allow-Origin", ori);
             res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS");
             res.setHeader("Access-Control-Max-Age", "3600");

@@ -16,7 +16,9 @@ CREATE TABLE `tm_pages` (
 -- ----------------------------
 --  Records of `tm_pages`
 -- ----------------------------
+BEGIN;
 INSERT INTO `tm_pages` VALUES ('1', '1', '# Hello world\n\nThis is a demo page.', '2017-11-09 13:54:39', '2017-11-09 13:54:39'), ('2', '1', 'Tinyme - Simple restful api demo', '2017-11-09 13:58:39', '2017-11-09 13:58:39');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `tm_tokens`

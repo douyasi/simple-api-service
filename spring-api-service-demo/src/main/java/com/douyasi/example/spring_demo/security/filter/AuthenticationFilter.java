@@ -4,17 +4,26 @@ import java.io.IOException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+// import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+// import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+// import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.filter.OncePerRequestFilter;
+// import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 
 import com.douyasi.example.spring_demo.exception.AppException;
+import com.douyasi.example.spring_demo.security.TokenUserDetailsService;
 import com.douyasi.tinyme.common.model.CommonResult;
 import com.douyasi.tinyme.common.util.ResultUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -25,25 +34,32 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 
  * ref:
  * - https://www.programcreek.com/java-api-examples/?class=javax.servlet.http.HttpServletRequest&method=getHeader
+ * - https://github.com/liumapp/spring-security-mybatis-demo
  * 
  * @author raoyc
  */
-public class AuthenticationFilter extends GenericFilterBean {
+public class AuthenticationFilter extends OncePerRequestFilter {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    
     private static final String REALM = "Access to spring_demo site";
     private static final String AUTHENTICATION_SCHEME = "Bearer";
     
+    @Autowired
+    private TokenUserDetailsService userDetailsService;
+
     @Override
-    public void doFilter(
-      ServletRequest request, 
-      ServletResponse response,
+    public void doFilterInternal(
+      HttpServletRequest request, 
+      HttpServletResponse response,
       FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse resp = (HttpServletResponse)response;
         // Get the Authorization header from the request
-        String authorizationHeader = req.getHeader(HttpHeaders.AUTHORIZATION);
+        String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         // Validate the Authorization header
+        
         if (!isTokenBasedAuthentication(authorizationHeader)) {
-            abortWithUnauthorized(resp);
+            logger.debug("abort With Unauthorized");
+            abortWithUnauthorized(response);
             return;
         }
         
@@ -51,9 +67,9 @@ public class AuthenticationFilter extends GenericFilterBean {
         String token = authorizationHeader.substring(AUTHENTICATION_SCHEME.length()).trim();
         try {
             // Validate the token
-            validateToken(token, resp);
+            validateToken(token, response, request);
         } catch (AppException e) {
-            handleAppException(resp, e);
+            handleAppException(response, e);
         } catch (Exception e) {
             
         }
@@ -75,9 +91,22 @@ public class AuthenticationFilter extends GenericFilterBean {
         resp.setHeader(HttpHeaders.WWW_AUTHENTICATE, AUTHENTICATION_SCHEME + " realm=\"" + REALM + "\"");
     }
 
-    private void validateToken(String token, HttpServletResponse resp) throws AppException {
+    private void validateToken(String token, HttpServletResponse resp, HttpServletRequest req) throws AppException {
         // Check if the token was issued by the server and if it's not expired
         // Throw an Exception if the token is invalid
+        if (SecurityContextHolder.getContext().getAuthentication() == null) {
+            // It is not compelling necessary to load the use details from the database. You could also store the information
+            // in the token and read it from it. It's up to you ;)
+            // chk twice
+            UserDetails userDetails = null;
+            userDetails = userDetailsService.loadUserByToken(token);
+            if (userDetails != null) {
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
+                logger.info("authenticated user " + userDetails.getUsername() + "], setting security context");
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+        }
         throw new AppException("401", "access token already expired, please recall `/api/login` !");
     }
 
