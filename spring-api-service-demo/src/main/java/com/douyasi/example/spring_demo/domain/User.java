@@ -25,7 +25,7 @@ import lombok.experimental.Accessors;
 @Setter
 @ToString
 @SuppressWarnings("unused")
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+// @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class User implements Serializable {
 
     private static final long serialVersionUID = -3499834787613672470L;

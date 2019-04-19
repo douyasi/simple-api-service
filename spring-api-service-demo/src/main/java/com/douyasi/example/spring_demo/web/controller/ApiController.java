@@ -39,6 +39,16 @@ public class ApiController {
     
     
     /**
+     * index
+     * 
+     * @return 
+     */
+    @GetMapping("/")
+    public CommonResult<?> getIndex() {
+        return ResultUtil.returnSuccess();
+    }
+    
+    /**
      * login
      * 
      * @return

@@ -2,6 +2,7 @@ package com.douyasi.example.spring_demo.security.filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
@@ -26,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  * - https://github.com/RobJinman/CorsFilter
  * - https://github.com/taoxy1993/Spring4-SpringMVC4-Mybatis4-Quartz
  */
+@Component
 public class CORSFilter extends GenericFilterBean {
 
     private static final Logger logger = LoggerFactory.getLogger(CORSFilter.class);

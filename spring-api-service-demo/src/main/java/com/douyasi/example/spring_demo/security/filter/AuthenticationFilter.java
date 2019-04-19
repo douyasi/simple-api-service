@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 // import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 // import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 // import org.springframework.web.filter.GenericFilterBean;
@@ -38,6 +39,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 
  * @author raoyc
  */
+@Component
 public class AuthenticationFilter extends OncePerRequestFilter {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -85,10 +87,19 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                 .startsWith(AUTHENTICATION_SCHEME.toLowerCase() + " ");
     }
 
-    private void abortWithUnauthorized(HttpServletResponse resp) {
+    private void abortWithUnauthorized(HttpServletResponse resp) throws IOException {
         resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
         resp.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
         resp.setHeader(HttpHeaders.WWW_AUTHENTICATE, AUTHENTICATION_SCHEME + " realm=\"" + REALM + "\"");
+        CommonResult<Object> result = ResultUtil.returnError("401", "illegal or invaild request!");
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonInString = "Error or exception occurs !";
+        try {
+            jsonInString = mapper.writeValueAsString(result);
+        } catch (JsonProcessingException ex) {
+            ex.printStackTrace();
+        }
+        resp.getWriter().write(jsonInString);
     }
 
     private void validateToken(String token, HttpServletResponse resp, HttpServletRequest req) throws AppException {

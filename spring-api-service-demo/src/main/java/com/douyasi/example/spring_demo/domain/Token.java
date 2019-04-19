@@ -23,7 +23,7 @@ import lombok.experimental.Accessors;
 @Setter
 @ToString
 @SuppressWarnings("unused")
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+// @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Token implements Serializable {
 
     private static final long serialVersionUID = 1786836742703432189L;

@@ -23,7 +23,7 @@ import lombok.experimental.Accessors;
 @Setter
 @ToString
 @SuppressWarnings("unused")
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+// @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Page implements Serializable {
 
     private static final long serialVersionUID = 7217589483148921228L;
