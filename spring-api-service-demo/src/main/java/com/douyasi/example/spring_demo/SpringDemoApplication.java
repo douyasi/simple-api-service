@@ -12,7 +12,6 @@ import com.douyasi.example.spring_demo.security.filter.CORSFilter;
 
 @SpringBootApplication
 public class SpringDemoApplication {
-    
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Bean
@@ -21,7 +20,8 @@ public class SpringDemoApplication {
         Filter corsFilter = new CORSFilter();
         registration.setFilter(corsFilter);
         // In case you want the filter to apply to specific URL patterns only
-        registration.addUrlPatterns("/api/*", "/*");
+        registration.addUrlPatterns("/*");  // don't recognize servlet.context-path=/api
+        // registration.setOrder(-100);
         return registration;
     }
 
