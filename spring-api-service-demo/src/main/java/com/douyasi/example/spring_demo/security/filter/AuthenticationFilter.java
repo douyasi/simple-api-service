@@ -36,7 +36,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * ref:
  * - https://www.programcreek.com/java-api-examples/?class=javax.servlet.http.HttpServletRequest&method=getHeader
  * - https://github.com/liumapp/spring-security-mybatis-demo
- * 
+ * - https://www.cnblogs.com/bndong/p/10275430.html
  * @author raoyc
  */
 @Component
@@ -116,6 +116,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
                 logger.info("authenticated user " + userDetails.getUsername() + "], setting security context");
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                return;
             }
         }
         throw new AppException("401", "access token already expired, please recall `/api/login` !");
