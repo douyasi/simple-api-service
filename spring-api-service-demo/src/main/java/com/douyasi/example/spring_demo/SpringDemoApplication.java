@@ -21,7 +21,7 @@ public class SpringDemoApplication {
         registration.setFilter(corsFilter);
         // In case you want the filter to apply to specific URL patterns only
         registration.addUrlPatterns("/*");  // don't recognize servlet.context-path=/api
-        // registration.setOrder(-100);
+        registration.setOrder(1);
         return registration;
     }
 
