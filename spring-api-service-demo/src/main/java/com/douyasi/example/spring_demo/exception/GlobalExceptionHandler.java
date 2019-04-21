@@ -24,7 +24,7 @@ import java.io.IOException;
  * - https://github.com/BNDong/spring-cloud-examples/
  */
 @ControllerAdvice
-@EnableWebMvc
+// @EnableWebMvc
 public class GlobalExceptionHandler {
 
     /**
@@ -105,10 +105,10 @@ public class GlobalExceptionHandler {
             || request.getHeader(HttpHeaders.ACCEPT).contains("application/json")
                 || (request.getHeader("X-Requested-With") != null && request.getHeader("X-Requested-With").contains("XMLHttpRequest"))
         )) {  // render view as html
-            // ModelAndView modelAndView = new ModelAndView("error");
-            ModelAndView modelAndView = new ModelAndView();
+            ModelAndView modelAndView = new ModelAndView("error");
+            // ModelAndView modelAndView = new ModelAndView();
             modelAndView.addObject("exception", entity);
-            modelAndView.setViewName("error.ftl");
+            // modelAndView.setViewName("error.ftl");
             return modelAndView;
         } else {
             // render view as json
