@@ -42,6 +42,7 @@ public class OAuthUserDetailsServiceImpl implements TokenUserDetailsService {
             Long uid = oToken.getUid();
             Long expiredAt = oToken.getExpiredAt();
             Long time = System.currentTimeMillis();
+            System.out.println("time: " + time + "expiredAt: " + expiredAt);
             if (time < expiredAt*1000) {  // not expired
                  User user = userDao.getUser(uid);
                  if (user == null) {

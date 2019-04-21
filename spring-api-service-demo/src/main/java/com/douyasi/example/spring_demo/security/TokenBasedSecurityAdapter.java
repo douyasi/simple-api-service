@@ -45,7 +45,7 @@ public class TokenBasedSecurityAdapter extends WebSecurityConfigurerAdapter {
             // don't create session
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                     .authorizeRequests() // #1 All requests are protected by default
-                    .antMatchers("/", "login", "/error", "/api/page").permitAll()  // #2 The home and login api/endpoints are explicitly excluded
+                    .antMatchers("/", "login", "/error").permitAll()  // #2 The home and login api/endpoints are explicitly excluded
                     //.antMatchers("/user/", "/user/**").hasAnyRole("USER")  // #3 The page required `USER` role
                     //.antMatchers().hasAuthority("USER")
                     //.antMatchers("/admin/**").hasAnyRole("ADMIN")
