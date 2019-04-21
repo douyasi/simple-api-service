@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,16 +60,12 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         // Get the Authorization header from the request
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         // Validate the Authorization header
-        
-        if (!isTokenBasedAuthentication(authorizationHeader)) {
-            logger.debug("abort With Unauthorized");
-            abortWithUnauthorized(response);
-            return;
-        }
-        
-        // Extract the token from the Authorization header
-        String token = authorizationHeader.substring(AUTHENTICATION_SCHEME.length()).trim();
         try {
+            if (!isTokenBasedAuthentication(authorizationHeader)) {
+                throw new AppException("403", "fail to authenticate access token!");
+            }
+            // Extract the token from the Authorization header
+            String token = authorizationHeader.substring(AUTHENTICATION_SCHEME.length()).trim();
             // Validate the token
             validateToken(token, response, request);
         } catch (AppException e) {
@@ -85,21 +83,6 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         // The authentication scheme comparison must be case-insensitive
         return authorizationHeader != null && authorizationHeader.toLowerCase()
                 .startsWith(AUTHENTICATION_SCHEME.toLowerCase() + " ");
-    }
-
-    private void abortWithUnauthorized(HttpServletResponse resp) throws IOException {
-        resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        resp.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
-        resp.setHeader(HttpHeaders.WWW_AUTHENTICATE, AUTHENTICATION_SCHEME + " realm=\"" + REALM + "\"");
-        CommonResult<Object> result = ResultUtil.returnError("401", "illegal or invaild request!");
-        ObjectMapper mapper = new ObjectMapper();
-        String jsonInString = "Error or exception occurs !";
-        try {
-            jsonInString = mapper.writeValueAsString(result);
-        } catch (JsonProcessingException ex) {
-            ex.printStackTrace();
-        }
-        resp.getWriter().write(jsonInString);
     }
 
     private void validateToken(String token, HttpServletResponse resp, HttpServletRequest req) throws AppException {
@@ -139,6 +122,9 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         resp.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
         CommonResult<Object> result = ResultUtil.returnError(e.getMessage(), e.getCode());
         ObjectMapper mapper = new ObjectMapper();
+        mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+        // mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         String jsonInString = "Error or exception occurs !";
         try {
             jsonInString = mapper.writeValueAsString(result);
