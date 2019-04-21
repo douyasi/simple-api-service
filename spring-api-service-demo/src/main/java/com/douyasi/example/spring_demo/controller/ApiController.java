@@ -1,4 +1,4 @@
-package com.douyasi.example.spring_demo.web.controller;
+package com.douyasi.example.spring_demo.controller;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -8,18 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 // import java.util.List;
 
 // import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 // import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.douyasi.example.spring_demo.domain.Token;
 import com.douyasi.example.spring_demo.domain.User;
 import com.douyasi.example.spring_demo.exception.AppException;
 import com.douyasi.example.spring_demo.model.dto.UserCredentials;
 import com.douyasi.example.spring_demo.service.AuthService;
-// import com.douyasi.example.spring_demo.service.AuthService;
 import com.douyasi.tinyme.common.model.CommonResult;
 import com.douyasi.tinyme.common.util.ResultUtil;
 
@@ -47,7 +43,17 @@ public class ApiController {
     public CommonResult<?> getIndex() {
         return ResultUtil.returnSuccess();
     }
-    
+
+    /**
+     * ping
+     * 
+     * @return
+     */
+    @GetMapping(value = "/ping", produces="text/plain")
+    public String getPing() {
+        return "pong";
+    }
+
     /**
      * login
      * 

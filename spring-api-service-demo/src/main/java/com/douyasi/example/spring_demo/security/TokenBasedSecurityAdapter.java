@@ -2,7 +2,7 @@ package com.douyasi.example.spring_demo.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+// import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.douyasi.example.spring_demo.config.AuthExceptionEntryPoint;
 
@@ -13,12 +13,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+// import com.douyasi.example.spring_demo.security.filter.AuthenticationFilter;
+
 @Configuration
 @EnableWebSecurity
 public class TokenBasedSecurityAdapter extends WebSecurityConfigurerAdapter {
-    
+
     @Autowired
     private AuthExceptionEntryPoint authExceptionEntryPoint;
 
@@ -34,9 +35,6 @@ public class TokenBasedSecurityAdapter extends WebSecurityConfigurerAdapter {
                 .userDetailsService(userDetailsService);
     }
 
-    // roles admin allow to access /admin/**
-    // roles USER allow to access /page/**
-    // custom 403 access denied handler
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -45,15 +43,16 @@ public class TokenBasedSecurityAdapter extends WebSecurityConfigurerAdapter {
             // don't create session
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                     .authorizeRequests() // #1 All requests are protected by default
-                    .antMatchers("/", "login", "/error").permitAll()  // #2 The home and login api/endpoints are explicitly excluded
+                    .antMatchers("/", "login", "/error", "ping").permitAll()  // #2 The home and login api/endpoints are explicitly excluded
                     //.antMatchers("/user/", "/user/**").hasAnyRole("USER")  // #3 The page required `USER` role
                     //.antMatchers().hasAuthority("USER")
                     //.antMatchers("/admin/**").hasAnyRole("ADMIN")
                     .antMatchers("page", "page**")
                     .authenticated()  // #4 All other endpoints require an authenticated user
                     .and()
-                    .exceptionHandling().authenticationEntryPoint(authExceptionEntryPoint).and()
-                    .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+                    .exceptionHandling().authenticationEntryPoint(authExceptionEntryPoint)
+                    .accessDeniedHandler(accessDeniedHandler);
+        // http.addFilterBefore(authenticationFilterBean(), UsernamePasswordAuthenticationFilter.class);
     }
     
     /*

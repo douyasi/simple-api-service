@@ -5,9 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
+ * SpringDemoApplication
  * 
  * @author raoyc
- * - https://github.com/BNDong/spring-cloud-examples/
  */
 @SpringBootApplication
 public class SpringDemoApplication {

@@ -48,6 +48,7 @@ public class CORSFilter extends GenericFilterBean {
             res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS");
             res.setHeader("Access-Control-Max-Age", "3600");
             res.setHeader("Access-Control-Allow-Headers", "Authorization, "
+                    + "X-Requested-With, "
                     + "Content-Type, "
                     + "Accept, "
                     + "Origin, "

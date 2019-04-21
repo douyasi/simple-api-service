@@ -1,6 +1,6 @@
 package com.douyasi.example.spring_demo.exception;
 
-public class AppException extends Exception {
+public class AppException extends RuntimeException {
 
     private static final long serialVersionUID = 9071608656003995940L;
 

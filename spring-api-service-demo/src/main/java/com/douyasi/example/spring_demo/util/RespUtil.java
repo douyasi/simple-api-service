@@ -21,7 +21,7 @@ public class RespUtil {
     public static void respException(HttpServletResponse resp, AppException e) throws IOException {
         if (e != null) {
             Integer code = Integer.parseInt(e.getCode());
-            if (code > 300 && code < 500) {
+            if (code >= 400 && code < 500) {
                 resp.setStatus(code);
             } else {
                 resp.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());  // 500
@@ -31,6 +31,11 @@ public class RespUtil {
         }
         resp.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
         CommonResult<Object> result = ResultUtil.returnError(e.getMessage(), e.getCode());
+        String jsonInString = objectToJsonInString(result);
+        resp.getWriter().write(jsonInString);
+    }
+
+    public static String objectToJsonInString(Object result) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
@@ -42,6 +47,6 @@ public class RespUtil {
         } catch (JsonProcessingException ex) {
             ex.printStackTrace();
         }
-        resp.getWriter().write(jsonInString);
+        return jsonInString;
     }
 }
