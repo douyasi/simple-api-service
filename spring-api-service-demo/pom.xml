@@ -21,7 +21,6 @@
 		<!-- Other properties -->
 		<mybatis-spring-boot-starter.version>2.0.1</mybatis-spring-boot-starter.version>
 		<mysql-connector-java.version>5.1.47</mysql-connector-java.version>
-		<spring-boot-starter-thymeleaf.version>2.1.4.RELEASE</spring-boot-starter-thymeleaf.version>
 	</properties>
 
 	<dependencies>
@@ -42,14 +41,10 @@
 			<version>${mybatis-spring-boot-starter.version}</version>
 		</dependency>
 
-		<!-- thymeleaf -->
-		<!--
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-			<version>${spring-boot-starter-thymeleaf.version}</version>
+			<artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
-		-->
 
 		<!-- MySQL -->
 		<dependency>

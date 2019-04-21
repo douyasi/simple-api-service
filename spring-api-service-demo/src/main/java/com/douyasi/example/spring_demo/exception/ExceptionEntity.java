@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.io.Serializable;
 
 @NoArgsConstructor
@@ -14,13 +16,12 @@ public class ExceptionEntity implements Serializable {
 
     private static final long serialVersionUID = 9031619656203165441L;
 
-    private String message;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    private String code;
-    
-    private String path;
-    
-    private String error;
-    
-    private Date timestamp = new Date();
+    private String code, message, path, error, timestamp;
+
+    public String getTimestamp() {
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Shanghai"));
+        return now.format(formatter);
+    }
 }

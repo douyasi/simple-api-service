@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 // import java.util.List;
 
-// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 // import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -42,6 +41,11 @@ public class ApiController {
     @GetMapping("/")
     public CommonResult<?> getIndex() {
         return ResultUtil.returnSuccess();
+    }
+
+    @GetMapping("/err1")
+    public void getError() {
+        throw new AppException("500", "异常错误");
     }
 
     /**

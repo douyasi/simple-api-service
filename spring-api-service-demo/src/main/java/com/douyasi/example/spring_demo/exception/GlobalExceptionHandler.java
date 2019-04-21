@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +24,7 @@ import java.io.IOException;
  * - https://github.com/BNDong/spring-cloud-examples/
  */
 @ControllerAdvice
+@EnableWebMvc
 public class GlobalExceptionHandler {
 
     /**
@@ -99,7 +101,8 @@ public class GlobalExceptionHandler {
      */
     private ModelAndView renderView(HttpServletRequest request, HttpServletResponse response, ExceptionEntity entity) {
         if (!(
-            request.getHeader("accept").contains("application/json")
+            request.getHeader(HttpHeaders.CONTENT_TYPE).contains("application/json")
+            || request.getHeader(HttpHeaders.ACCEPT).contains("application/json")
                 || (request.getHeader("X-Requested-With") != null && request.getHeader("X-Requested-With").contains("XMLHttpRequest"))
         )) {  // render view as html
             // ModelAndView modelAndView = new ModelAndView("error");
