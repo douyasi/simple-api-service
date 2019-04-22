@@ -20,7 +20,8 @@ public class FilterConfiguration {
         FilterRegistrationBean<CORSFilter> registration = new FilterRegistrationBean<CORSFilter>();
         registration.setFilter(corsFilter);
         // In case you want the filter to apply to specific URL patterns only
-        registration.addUrlPatterns("/*");  // don't recognize servlet.context-path=/api
+        // don't recognize servlet.context-path=/api
+        registration.addUrlPatterns("/*");
         registration.setOrder(200);
         return registration;
     }
@@ -30,7 +31,8 @@ public class FilterConfiguration {
         FilterRegistrationBean<AuthenticationFilter> registration = new FilterRegistrationBean<AuthenticationFilter>();
         AuthenticationFilter authFilter = new AuthenticationFilter();
         registration.setFilter(authFilter);
-        registration.addUrlPatterns("/page", "/page/**");  // don't recognize servlet.context-path=/api
+        // don't recognize servlet.context-path=/api
+        registration.addUrlPatterns("/page", "/page/**");
         registration.setOrder(100);
         return registration;
     }
