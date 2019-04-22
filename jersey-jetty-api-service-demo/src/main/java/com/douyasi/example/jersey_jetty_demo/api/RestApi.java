@@ -39,7 +39,11 @@ import com.douyasi.tinyme.common.model.CommonResult;
 import com.douyasi.tinyme.common.util.ResultUtil;
 import com.douyasi.tinyme.common.util.ValidateUtil;
 
-
+/**
+ * RestApi
+ * 
+ * @author raoyc
+ */
 @Path("/api")
 public class RestApi {
     static SqlSessionFactory sqlSessionFactory = null;
@@ -47,6 +51,9 @@ public class RestApi {
     static {
         sqlSessionFactory = MyBatisUtil.getSqlSessionFactory();
     }
+
+    @Context
+    private SecurityContext securityContext;
 
     
     /**
@@ -80,10 +87,9 @@ public class RestApi {
     @Secured
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public CommonResult<?> getPages(@BeanParam PageBean pageBean, @Context SecurityContext securityContext)
+    public CommonResult<?> getPages(@BeanParam PageBean pageBean)
     {
-        AuthUser authUser = (AuthUser) securityContext.getUserPrincipal();
-        Long uid = authUser.getUserId();
+        Long uid = getAuthUserId();
         pageBean.setUid(uid);
         SqlSession sqlSession = sqlSessionFactory.openSession();
         PageDao pageDao = sqlSession.getMapper(PageDao.class);
@@ -103,10 +109,9 @@ public class RestApi {
     @Secured
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public CommonResult<?> postPage(CreateOrUpdatePage createPage, @Context SecurityContext securityContext)
+    public CommonResult<?> postPage(CreateOrUpdatePage createPage)
     {
-        AuthUser authUser = (AuthUser) securityContext.getUserPrincipal();
-        Long uid = authUser.getUserId();
+        Long uid = getAuthUserId();
         
         String content = createPage.getContent();
         if (ValidateUtil.isEmpty(content)) {
@@ -148,10 +153,9 @@ public class RestApi {
     @Secured
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public CommonResult<?> getSpecificPage(@PathParam("id") Long id, @Context SecurityContext securityContext)
+    public CommonResult<?> getSpecificPage(@PathParam("id") Long id)
     {
-        AuthUser authUser = (AuthUser) securityContext.getUserPrincipal();
-        Long uid = authUser.getUserId();
+        Long uid = getAuthUserId();
         
         SqlSession sqlSession = sqlSessionFactory.openSession();
         
@@ -174,10 +178,9 @@ public class RestApi {
     @Secured
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public CommonResult<?> putSpecificPage(@PathParam("id") Long id, CreateOrUpdatePage updatePage, @Context SecurityContext securityContext)
+    public CommonResult<?> putSpecificPage(@PathParam("id") Long id, CreateOrUpdatePage updatePage)
     {
-        AuthUser authUser = (AuthUser) securityContext.getUserPrincipal();
-        Long uid = authUser.getUserId();
+        Long uid = getAuthUserId();
         
         String content = updatePage.getContent();
         if (ValidateUtil.isEmpty(content)) {
@@ -217,10 +220,9 @@ public class RestApi {
     @Secured
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public CommonResult<?> deleteSpecificPage(@PathParam("id") Long id, @Context SecurityContext securityContext)
+    public CommonResult<?> deleteSpecificPage(@PathParam("id") Long id)
     {
-        AuthUser authUser = (AuthUser) securityContext.getUserPrincipal();
-        Long uid = authUser.getUserId();
+        Long uid = getAuthUserId();
         
         SqlSession sqlSession = sqlSessionFactory.openSession();
         
@@ -244,5 +246,15 @@ public class RestApi {
         } else {
             return ResultUtil.returnError("delete fail!", null);
         }
+    }
+
+    /**
+     * getAuthUserId
+     * @return
+     */
+    private Long getAuthUserId() {
+        AuthUser authUser = (AuthUser) securityContext.getUserPrincipal();
+        Long uid = authUser.getUserId();
+        return uid;
     }
 }
