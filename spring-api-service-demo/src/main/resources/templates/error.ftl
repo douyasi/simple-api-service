@@ -34,8 +34,8 @@
             color: #ccc;
         }
         .exception-var table tbody{
-            font-size: 13px;
-            font-family: Consolas,"Liberation Mono",Courier,"微软雅黑";
+            font-size: 12px;
+            font-family: -apple-system,BlinkMacSystemFont,Consolas,"Liberation Mono",Courier,"Helvetica Neue",PingFang SC,"Microsoft YaHei","Source Han Sans SC","Noto Sans CJK SC","WenQuanYi Micro Hei",sans-serif;
         }
         .exception-var table td{
             padding: 0 6px;
@@ -55,29 +55,11 @@
 <body>
 
 <div class="exception-var">
-    <h2>Error or exception occurs !</h2>
-    <table>
-        <tbody>
-        <tr>
-            <td>Code</td>
-            <td>
-                ${(exception.code)!}
-            </td>
-        </tr>
-        <tr>
-            <td>Error</td>
-            <td>
-                ${(exception.error)!}
-            </td>
-        </tr>
-        <tr>
-            <td>Message</td>
-            <td>
-                ${(exception.message)!}
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <#attempt>
+        <h2>${errorMsg}</h2>
+        <#recover>
+        <h2>Error or exception occurs !</h2>
+    </#attempt>
 </div>
 </body>
 </html>

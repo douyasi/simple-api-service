@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +23,6 @@ import java.io.IOException;
  * - https://github.com/BNDong/spring-cloud-examples/
  */
 @ControllerAdvice
-// @EnableWebMvc
 public class GlobalExceptionHandler {
 
     /**
@@ -76,13 +74,35 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 500 http error for IOException
+     */
+    @ExceptionHandler(value = IOException.class)
+    public ModelAndView errorHandler(HttpServletRequest request, IOException exception, HttpServletResponse response) {
+        return commonHandler(request, response,
+            exception.getClass().getSimpleName(),
+            HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            exception.getMessage());
+    }
+
+    /**
+     * 500 http error for RuntimeException
+     */
+    @ExceptionHandler(value = RuntimeException.class)
+    public ModelAndView errorHandler(HttpServletRequest request, RuntimeException exception, HttpServletResponse response) {
+        return commonHandler(request, response,
+            exception.getClass().getSimpleName(),
+            HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            exception.getMessage());
+    }
+
+    /**
      * 500 http error for AppException
      */
     @ExceptionHandler(value = AppException.class)
     public ModelAndView errorHandler(HttpServletRequest request, AppException exception, HttpServletResponse response) {
         return commonHandler(request, response,
             exception.getClass().getSimpleName(),
-            Integer.valueOf(exception.getCode()).intValue(),
+            Integer.valueOf(exception.getCode()),
             exception.getMessage());
     }
 
@@ -100,19 +120,18 @@ public class GlobalExceptionHandler {
      * renderView
      */
     private ModelAndView renderView(HttpServletRequest request, HttpServletResponse response, ExceptionEntity entity) {
-        if (!(
-            request.getHeader(HttpHeaders.CONTENT_TYPE).contains("application/json")
-            || request.getHeader(HttpHeaders.ACCEPT).contains("application/json")
-                || (request.getHeader("X-Requested-With") != null && request.getHeader("X-Requested-With").contains("XMLHttpRequest"))
-        )) {  // render view as html
-            ModelAndView modelAndView = new ModelAndView("error");
-            // ModelAndView modelAndView = new ModelAndView();
-            modelAndView.addObject("exception", entity);
-            // modelAndView.setViewName("error.ftl");
+        boolean isRawJson = (request.getHeader(HttpHeaders.CONTENT_TYPE) != null) && request.getHeader(HttpHeaders.CONTENT_TYPE).contains("application/json");
+        boolean wantJson = (request.getHeader(HttpHeaders.ACCEPT) != null) && request.getHeader(HttpHeaders.ACCEPT).contains("application/json");
+        boolean isAjax = (request.getHeader("X-Requested-With") != null) && request.getHeader("X-Requested-With").contains("XMLHttpRequest");
+        if (!(isRawJson || wantJson || isAjax)) {  // render view as html
+            // ModelAndView modelAndView = new ModelAndView("error");
+            ModelAndView modelAndView = new ModelAndView("exception", "exception", entity);
+//            modelAndView.addObject("exception", entity);
+//            modelAndView.setViewName("exception.ftl");
             return modelAndView;
         } else {
             // render view as json
-            Integer code = Integer.parseInt(entity.getCode());
+            int code = Integer.parseInt(entity.getCode());
             if (code >= 400 && code < 500) {
                 response.setStatus(code);
             } else {

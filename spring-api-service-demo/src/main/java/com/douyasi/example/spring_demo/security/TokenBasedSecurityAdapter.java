@@ -1,8 +1,9 @@
 package com.douyasi.example.spring_demo.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.web.access.AccessDeniedHandler;
-// import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.douyasi.example.spring_demo.config.AuthExceptionEntryPoint;
 
@@ -14,7 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-// import com.douyasi.example.spring_demo.security.filter.AuthenticationFilter;
+import com.douyasi.example.spring_demo.security.filter.AuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -61,6 +62,7 @@ public class TokenBasedSecurityAdapter extends WebSecurityConfigurerAdapter {
         return new AuthenticationFilter();
     }
     */
+
 
     @Override
     public void configure(WebSecurity web) throws Exception {

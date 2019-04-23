@@ -13,8 +13,7 @@ public class FilterConfiguration {
 
     @Autowired
     private CORSFilter corsFilter;
-
-
+    
     @Bean
     public FilterRegistrationBean<CORSFilter> corsFilter() {
         FilterRegistrationBean<CORSFilter> registration = new FilterRegistrationBean<CORSFilter>();
@@ -25,7 +24,7 @@ public class FilterConfiguration {
         registration.setOrder(200);
         return registration;
     }
-    
+
     @Bean
     public FilterRegistrationBean<AuthenticationFilter> authenticationFilter() {
         FilterRegistrationBean<AuthenticationFilter> registration = new FilterRegistrationBean<AuthenticationFilter>();

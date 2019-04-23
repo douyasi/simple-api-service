@@ -61,19 +61,19 @@
         <tr>
             <td>Code</td>
             <td>
-                ${(exception.code)!}
+                ${(exception.getCode())!}
             </td>
         </tr>
         <tr>
             <td>Error</td>
             <td>
-                ${(exception.error)!}
+                ${(exception.getError())!}
             </td>
         </tr>
         <tr>
             <td>Message</td>
             <td>
-                ${(exception.message)!}
+                ${(exception.getMessage())!}
             </td>
         </tr>
         </tbody>
