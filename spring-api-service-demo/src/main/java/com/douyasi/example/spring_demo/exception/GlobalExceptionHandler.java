@@ -123,11 +123,11 @@ public class GlobalExceptionHandler {
         boolean isRawJson = (request.getHeader(HttpHeaders.CONTENT_TYPE) != null) && request.getHeader(HttpHeaders.CONTENT_TYPE).contains("application/json");
         boolean wantJson = (request.getHeader(HttpHeaders.ACCEPT) != null) && request.getHeader(HttpHeaders.ACCEPT).contains("application/json");
         boolean isAjax = (request.getHeader("X-Requested-With") != null) && request.getHeader("X-Requested-With").contains("XMLHttpRequest");
-        if (!(isRawJson || wantJson || isAjax)) {  // render view as html
-            // ModelAndView modelAndView = new ModelAndView("error");
-            ModelAndView modelAndView = new ModelAndView("exception", "exception", entity);
-//            modelAndView.addObject("exception", entity);
-//            modelAndView.setViewName("exception.ftl");
+        if (!(isRawJson || wantJson || isAjax)) {
+            // render view as html
+            ModelAndView modelAndView = new ModelAndView("exception");
+//            ModelAndView modelAndView = new ModelAndView("exception", "exception", entity);
+            modelAndView.addObject("exception", entity);
             return modelAndView;
         } else {
             // render view as json
@@ -135,7 +135,8 @@ public class GlobalExceptionHandler {
             if (code >= 400 && code < 500) {
                 response.setStatus(code);
             } else {
-                response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());  // 500
+                // 500
+                response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             }
             response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
             String jsonInString = RespUtil.objectToJsonInString(entity);
