@@ -21,6 +21,8 @@ import java.io.IOException;
  * GlobalExceptionHandler
  * 
  * - https://github.com/BNDong/spring-cloud-examples/
+ * 
+ * @author raoyc
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -132,7 +134,7 @@ public class GlobalExceptionHandler {
         } else {
             // render view as json
             int code = Integer.parseInt(entity.getCode());
-            if (code >= 400 && code < 500) {
+            if (code >= HttpStatus.BAD_REQUEST.value() && code < HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 response.setStatus(code);
             } else {
                 // 500

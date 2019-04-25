@@ -26,6 +26,10 @@ public class HandleErrorController implements ErrorController {
                 errorMsg = "401 - Unauthorized";
                 break;
             }
+            case 403: {
+                errorMsg = "403 - Forbidden";
+                break;
+            }
             case 404: {
                 errorMsg = "404 - Not found";
                 break;

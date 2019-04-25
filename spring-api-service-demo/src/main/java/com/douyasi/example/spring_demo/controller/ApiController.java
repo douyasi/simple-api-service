@@ -2,7 +2,15 @@ package com.douyasi.example.spring_demo.controller;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
+import com.douyasi.example.spring_demo.domain.Page;
+import com.douyasi.example.spring_demo.domain.dao.PageDao;
+import com.douyasi.example.spring_demo.domain.model.ListData;
+import com.douyasi.example.spring_demo.model.dto.PageBean;
+import com.douyasi.example.spring_demo.security.AuthContext;
+import com.douyasi.example.spring_demo.security.AuthUser;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 // import java.util.List;
@@ -27,9 +35,12 @@ public class ApiController {
 
     private final AuthService authService;
     
+    private final PageDao pageDao;
+    
     @Autowired
-    public ApiController(AuthService authService) {
+    public ApiController(AuthService authService, PageDao pageDao) {
         this.authService = authService;
+        this.pageDao = pageDao;
     }
     
     
@@ -82,12 +93,23 @@ public class ApiController {
      * @return
      */
     @GetMapping("/page")
-    public CommonResult<?> getPages() {
-        Token token = new Token();
-        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Shanghai"));
-        token.setCreatedAt(now);
-        token.setUpdatedAt(now);
-        token.setUid(1L).setExpiredAt(133126712L).setToken("sdaghsdajhsdaadasda");
-        return ResultUtil.returnSuccess(token);
+    public CommonResult<?> getPages(@ModelAttribute PageBean pageBean) {
+        Long uid = getAuthUserId();
+        List<Page> pages = pageDao.getPagesByCondition(pageBean);
+        int pagesCount = pageDao.getPagesCountByCondition(pageBean);
+        ListData<Page> listData = new ListData<Page>(pagesCount, pageBean.getPerPage(), pageBean.getPage(), pages);
+        return ResultUtil.returnSuccess(listData);
+    }
+    
+    private Long getAuthUserId() {
+        return 1L;
+        /*
+        AuthUser user = AuthContext.getUser();
+        if (user != null) {
+            return user.getId();
+        } else {
+            throw new AppException("403", "illegal or incorrect credentials");
+        }
+        */
     }
 }

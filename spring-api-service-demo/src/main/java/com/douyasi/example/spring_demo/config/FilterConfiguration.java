@@ -5,7 +5,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.douyasi.example.spring_demo.security.filter.AuthenticationFilter;
 import com.douyasi.example.spring_demo.security.filter.CORSFilter;
 
 @Configuration
@@ -22,17 +21,6 @@ public class FilterConfiguration {
         // don't recognize servlet.context-path=/api
         registration.addUrlPatterns("/*");
         registration.setOrder(200);
-        return registration;
-    }
-
-    @Bean
-    public FilterRegistrationBean<AuthenticationFilter> authenticationFilter() {
-        FilterRegistrationBean<AuthenticationFilter> registration = new FilterRegistrationBean<AuthenticationFilter>();
-        AuthenticationFilter authFilter = new AuthenticationFilter();
-        registration.setFilter(authFilter);
-        // don't recognize servlet.context-path=/api
-        registration.addUrlPatterns("/page", "/page/**");
-        registration.setOrder(100);
         return registration;
     }
 }

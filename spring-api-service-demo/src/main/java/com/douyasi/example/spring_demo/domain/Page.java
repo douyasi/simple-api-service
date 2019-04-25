@@ -28,7 +28,7 @@ public class Page implements Serializable {
 
     private static final long serialVersionUID = 7217589483148921228L;
 
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private Long id, uid;
 
