@@ -1,7 +1,10 @@
 package com.douyasi.example.spring_demo.annotation;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.ServletModelAttributeMethodProcessor;
@@ -28,6 +31,14 @@ public class ParamNameProcessor extends ServletModelAttributeMethodProcessor {
         super(annotationNotRequired);
     }
     */
+
+    @Override
+    public boolean supportsParameter(MethodParameter parameter) {
+        return parameter.hasParameterAnnotation(RequestParam.class)
+            && !BeanUtils.isSimpleProperty(parameter.getParameterType())
+            && Arrays.stream(parameter.getParameterType().getDeclaredFields())
+            .anyMatch(field -> field.getAnnotation(ParamName.class) != null);
+    }
 
     @Override
     protected void bindRequestParameters(WebDataBinder binder, NativeWebRequest nativeWebRequest) {

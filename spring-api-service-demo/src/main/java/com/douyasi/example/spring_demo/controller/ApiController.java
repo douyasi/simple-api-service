@@ -97,7 +97,7 @@ public class ApiController {
      * @return
      */
     @GetMapping("/page")
-    public CommonResult<?> getPages(PageBean pageBean) {
+    public CommonResult<?> getPages(@RequestParam PageBean pageBean) {
         Long uid = getAuthUserId();
         pageBean.setUid(uid);
         List<Page> pages = pageDao.getPagesByCondition(pageBean);
