@@ -92,8 +92,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             Long uid = oToken.getUid();
             Long expiredAt = oToken.getExpiredAt();
             Long time = System.currentTimeMillis();
-            System.out.println("time: " + time + "expiredAt: " + expiredAt);
-            // not expired
             if (time < expiredAt*1000) {
                 User user = userDao.getUser(uid);
                 if (user == null) {

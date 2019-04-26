@@ -1,10 +1,17 @@
 package com.douyasi.example.spring_demo.model.dto;
 
+import com.douyasi.example.spring_demo.annotation.ParamName;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Setter
+@Getter
 public class PageBean {
 
     private Long uid;
@@ -12,21 +19,26 @@ public class PageBean {
     private int offset = 0;
 
     private int limit = 10;
-
+    
+    @ParamName("page")
     private int page = 1;
 
+    @ParamName("per_page")
     private int perPage = 10;
 
+    @ParamName("start_time")
     private String startTime = null;
 
+    @ParamName("end_time")
     private String endTime = null;
-
+    
+    @ParamName("page_ids")
     private String strPageIds = null;
-
+    
     private List<Long> pageIds = null;
 
     public List<Long> getPageIds() {
-        pageIds = Collections.emptyList();
+        List<Long> pageIds = Collections.emptyList();
         if (strPageIds == null) {
             return pageIds;
         }
