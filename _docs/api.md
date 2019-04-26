@@ -1,7 +1,7 @@
 接口文档
 ------
 
->   `jersey-jetty-api-service-demo` 主要实现简单的 `OAuth` 登录，会话用户对页面的增删改查功能。
+>   `jersey-jetty-api-service-demo` 与 `spring-api-service-demo` 主要实现简单的 `OAuth` 登录，会话用户对页面的增删改查功能。
 
 ### 路由
 

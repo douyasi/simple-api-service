@@ -35,6 +35,10 @@ flyway -user=root -password=root -url=jdbc:mysql://localhost:3306/tm_demo_dev -l
 
 此项目主要使用 `Spring` 框架，来完成 `RESTFUL API` ，相比上面 `jersey-jetty-api-service-demo` 项目较为复杂一些。
 
+### 对比
+
+`jersey-jetty-api-service-demo` 项目打包之后大小为 `12.9MB` ，而 `spring-api-service-demo` 项目打包之后大小为 `23.2MB` ，后者文件大小差不多是前者的2倍。
+
 ### 参考资料
 
 - https://github.com/DocsHome/microservices

@@ -38,7 +38,7 @@
             </if>
         </trim>
     </sql>
-    <select id="getPage" resultType="Page">
+    <select id="getPage" resultType="com.douyasi.example.jersey_jetty_demo.domain.Page">
         SELECT 
         <include refid="allColumn"></include>
         FROM `tm_pages`

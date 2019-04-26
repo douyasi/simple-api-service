@@ -6,14 +6,12 @@ import com.douyasi.tinyme.common.interfaces.IMessage;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * CommonResult
  *
  * @author raoyc
  */
-@XmlRootElement
 public class CommonResult<T> extends BaseResult<Object> implements Serializable {
 
     /**
@@ -31,8 +29,7 @@ public class CommonResult<T> extends BaseResult<Object> implements Serializable 
 
     /**
      * CommonResult message
-     * 
-     * @param success
+     *
      * @param message
      */
     public CommonResult(String message) {

@@ -27,7 +27,6 @@ public class ResultUtil {
     /**
      * return success without data
      *
-     * @param data
      * @return
      */
     public static <T> CommonResult<T> returnSuccess() {

@@ -7,7 +7,7 @@ jersey-jetty-api-service-demo
 
 ```bash
 # 根据实际修改数据库配置
-vim jersey-jetty-api-service-demo/src/main/mybatis-config.xml
+vim jersey-jetty-api-service-demo/src/main/resources/mybatis-config.xml
 # 打包
 mvn clean install
 # 执行 jar

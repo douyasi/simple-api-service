@@ -12,7 +12,7 @@ import javax.ws.rs.ApplicationPath;
 public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
-        register(AuthenticationFilter.class);
         register(MapperProvider.class);
+        register(AuthenticationFilter.class);
     }
 }
