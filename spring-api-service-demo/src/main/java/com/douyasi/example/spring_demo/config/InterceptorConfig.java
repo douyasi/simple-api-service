@@ -20,7 +20,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loggerInterceptor);
         registry.addInterceptor(authInterceptor)
-            .addPathPatterns("/page", "/page/**")
+            .addPathPatterns("/pages", "/page/**")
             .excludePathPatterns("/", "/login", "/error", "/ping");
     }
 }
