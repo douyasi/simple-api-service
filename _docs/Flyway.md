@@ -40,7 +40,8 @@ flyway migrate -locations=filesystem:/path/to/your/project/examples/src/main/res
 flyway migrate -locations=filesystem:`pwd`
 # 使用更多选项参数方式来执行
 flyway -configFiles=/path/to/flyway/config/flyway.conf migrate
-flyway -user=root -password=root -url=jdbc:mysql://localhost:3306/flyway_test -locations=filesystem:`pwd` migrate
+# 为防止中文乱码, 最好在url后面加?characterEncoding=utf8, 注意?后不能加过多参数
+flyway -user=root -password=root -url=jdbc:mysql://localhost:3306/flyway_test?characterEncoding=utf8 -locations=filesystem:`pwd` migrate
 ```
 
 >   注：
