@@ -41,7 +41,7 @@ flyway migrate -locations=filesystem:`pwd`
 # 使用更多选项参数方式来执行
 flyway -configFiles=/path/to/flyway/config/flyway.conf migrate
 # 如果您的数据库是 `utf8/utf8mb4`字符集编码，为了防止数据库表中某些 `Unicode` 字符（如中文）乱码, 最好在 `-url` 选项的 `JDBC DSN` 后面加上 `useUnicode=true&characterEncoding=utf8` 参数
-flyway -user=root -password=root -url=jdbc:mysql://localhost:3306/flyway_test?autoreconnect=true&useUnicode=true&characterEncoding=UTF-8' -locations=filesystem:`pwd` migrate
+flyway -user=root -password=root -url='jdbc:mysql://localhost:3306/flyway_test?autoreconnect=true&useUnicode=true&characterEncoding=UTF-8' -locations=filesystem:`pwd` migrate
 ```
 
 >   注：
