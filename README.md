@@ -20,7 +20,7 @@ simple-api-service
 cd _migration/db/dev
 cp -r flyway.conf.example flyway.cnf
 flyway migrate -locations=filesystem:`pwd`
-flyway -user=root -password=root -url=jdbc:mysql://localhost:3306/tm_demo_dev -locations=filesystem:`pwd` migrate
+flyway -user=root -password=root -url='jdbc:mysql://localhost:3306/tm_demo_dev?autoreconnect=true&useUnicode=true&characterEncoding=UTF-8' -locations=filesystem:`pwd` migrate
 ```
 
 #### `common` 类库说明
